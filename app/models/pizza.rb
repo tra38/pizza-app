@@ -23,7 +23,14 @@ class Pizza
   end
 
   def self.find(pizza_id)
-    self.json(key: "pizza_#{pizza_id}", uri_string: "https://pizzaserver.herokuapp.com/pizzas/#{pizza_id}/toppings")
+    pizza_id = pizza_id.to_i
+
+    # Need to find a more efficent way of filtering by specific pizza
+    pizza = self.json(key: "pizza_#{pizza_id}", uri_string: "https://pizzaserver.herokuapp.com/pizzas").select do |pizza|
+      (pizza["id"].to_i == pizza_id)
+    end.first
+
+    Pizza.new(id: pizza["id"], name: pizza["name"], description: pizza["description"])
   end
 
   private
@@ -33,7 +40,7 @@ class Pizza
 
   def self.get_request(key:, uri_string:)
     # APICache
-    APICache.get(key, :cache => 300, :timeout => 20) do
+    APICache.get(key, :cache => 300) do
       # http://stackoverflow.com/a/4581116/4765379
       url = URI.parse(uri_string)
       request = Net::HTTP::Get.new(url.to_s)
