@@ -6,12 +6,6 @@ class Pizza
 
   validates_presence_of :id, :name, :description
 
-  # def initialize(id:, name:, description:)
-  #   @id = id
-  #   @name = name
-  #   @description = description
-  # end
-
   def self.all
     pizzas = HttpRequest.json(key: "all_pizzas", uri_string: "https://pizzaserver.herokuapp.com/pizzas").reject do |pizza|
       (pizza["name"].blank? || pizza["description"].blank?)
