@@ -1,0 +1,51 @@
+<div class="modal fade" id="pizzaToppings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Toppings</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table-bordered table-hover toppings-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @toppings.empty? %>
+              <td>No toppings yet...</td>
+            <%else%>
+              <% @toppings.each do |topping| %>
+                <tr>
+                  <td><%= topping.name %></td>
+                </tr>
+              <% end %>
+            <%end%>
+          </tbody>
+        </table>
+
+        <h5>Create New Topping</h5>
+        <%= form_for(new_topping) do |f| %>
+          <% if new_topping.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(new_topping.errors.count, "error") %> prohibited this pizza from being saved:</h2>
+
+              <ul>
+              <% new_topping.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit 'Create Topping', :class => 'btn btn-primary' %>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

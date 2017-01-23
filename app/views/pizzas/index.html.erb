@@ -2,6 +2,21 @@
 
 <h1>Pizzas</h1>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newPizza">
+  Create New Pizza
+</button>
+
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#pizzaToppings">
+  Show Toppings
+</button>
+
+  <!-- Modal for Pizza Description -->
+  <%= render 'modal-form', pizza: @new_pizza, modal_name: "newPizza" %>
+
+  <!-- Modal for Pizza Toppings -->
+  <%= render 'modal-toppings', toppings: @toppings, new_topping: @new_topping %>
+
 <table class="table-bordered table-hover">
   <thead>
     <tr>
@@ -15,9 +30,12 @@
       <tr>
         <td><%= pizza.name %></td>
         <td><%= pizza.description %></td>
-        <td><%= link_to 'Show', pizza %></td>
-        <td><%= link_to 'Edit', edit_pizza_path(pizza.id) %></td>
-        <td><%= link_to 'Destroy', pizza, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target=<%= "#pizza#{pizza.id}Modal"%>>
+            Show/Edit Pizza
+          </button>
+          <%= render 'modal-form', pizza: pizza, modal_name: "pizza#{pizza.id}Modal" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -25,5 +43,4 @@
 
 <br>
 
-<%= link_to 'New Pizza', new_pizza_path %>
 <%= will_paginate @pizzas, renderer: BootstrapPagination::Rails %>

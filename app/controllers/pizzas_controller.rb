@@ -6,12 +6,17 @@ class PizzasController < ApplicationController
   # GET /pizzas
   # GET /pizzas.json
   def index
+    @new_pizza = Pizza.new
     @pizzas = Pizza.all.paginate(:page => params[:page])
+    @toppings = Topping.all
+    @new_topping = Topping.new
   end
 
   # GET /pizzas/1
   # GET /pizzas/1.json
   def show
+    id = params[:id].to_i
+    @pizza = Pizza.find(id)
   end
 
   # GET /pizzas/new
@@ -30,7 +35,8 @@ class PizzasController < ApplicationController
 
     respond_to do |format|
       if @pizza.save
-        format.html { redirect_to @pizza, notice: 'Pizza was successfully created.' }
+        binding.pry
+        format.html { redirect_to pizza_path, notice: 'Pizza was successfully created.' }
         format.json { render :show, status: :created, location: @pizza }
       else
         format.html { render :new }
@@ -71,6 +77,7 @@ class PizzasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pizza_params
+      binding.pry
       params.require(:pizza).permit(:name, :description)
     end
 
