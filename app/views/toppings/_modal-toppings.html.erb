@@ -13,10 +13,10 @@
             </tr>
           </thead>
           <tbody>
-            <% if @toppings.empty? %>
+            <% if toppings.empty? %>
               <td>No toppings yet...</td>
             <%else%>
-              <% @toppings.each do |topping| %>
+              <% toppings.each do |topping| %>
                 <tr>
                   <td><%= topping.name %></td>
                 </tr>

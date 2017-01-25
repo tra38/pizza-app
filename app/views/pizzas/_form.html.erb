@@ -1,5 +1,5 @@
 <%= form_for(pizza) do |f| %>
-  <%= render partial: "form_body", locals: { pizza: pizza, f: f } %>
+  <%= render partial: "form_body", locals: { pizza: pizza, f: f, toppings: toppings } %>
 
   <div class="actions">
     <%= f.submit %>

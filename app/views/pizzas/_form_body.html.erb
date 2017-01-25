@@ -20,14 +20,4 @@
 
 <br />
 
-<strong>Add Toppings</strong>:<br />
-<ul>
-<%= f.collection_check_boxes(:id, Topping.all, :id, :name) do |b| %>
-  <li>
-    <%= b.label do %>
-      <%= b.text %>
-      <%= b.check_box %>
-    <%end%>
-  </li>
-<% end %>
-</ul>
+<%= render "form_add_toppings",  f: f, toppings: toppings %>

@@ -1,0 +1,11 @@
+<strong>Add Toppings</strong>:<br />
+<ul>
+<%= f.collection_check_boxes(:topping_ids, toppings, :id, :name) do |b| %>
+  <li>
+    <%= b.label do %>
+      <%= b.text %>
+      <%= b.check_box %>
+    <%end%>
+  </li>
+<% end %>
+</ul>
