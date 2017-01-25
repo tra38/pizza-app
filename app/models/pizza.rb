@@ -7,13 +7,16 @@ class Pizza
   validates_presence_of :name, :description
 
   def toppings
-    begin
-      toppings = HttpRequest.json(key: "pizza_#{id}", uri_string: "https://pizzaserver.herokuapp.com/pizzas/#{id}/toppings")
-      toppings.map do |topping|
-        Topping.new(id: topping["id"], name: topping["name"])
-      end
-    rescue APICache::InvalidResponse
+    if id
+      query_for_toppings
+    else
       []
+    end
+  end
+
+  def topping_ids
+    toppings.each do |topping|
+      topping.id
     end
   end
 
@@ -46,4 +49,17 @@ class Pizza
 
     Pizza.new(id: pizza["id"], name: pizza["name"], description: pizza["description"])
   end
+
+  private
+  def query_for_toppings
+    begin
+      toppings = HttpRequest.json(key: "pizza_#{id}", uri_string: "https://pizzaserver.herokuapp.com/pizzas/#{id}/toppings")
+      toppings.map do |topping|
+        Topping.new(id: topping["id"], name: topping["name"])
+      end
+    rescue APICache::InvalidResponse
+      []
+    end
+  end
+
 end
