@@ -17,6 +17,7 @@ class PizzasController < ApplicationController
   def show
     id = params[:id].to_i
     @pizza = Pizza.find(id)
+    @toppings = Topping.all
   end
 
   # GET /pizzas/new
@@ -35,7 +36,6 @@ class PizzasController < ApplicationController
 
     respond_to do |format|
       if @pizza.save
-        binding.pry
         format.html { redirect_to pizza_path, notice: 'Pizza was successfully created.' }
         format.json { render :show, status: :created, location: @pizza }
       else
@@ -77,7 +77,6 @@ class PizzasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pizza_params
-      binding.pry
       params.require(:pizza).permit(:name, :description)
     end
 
