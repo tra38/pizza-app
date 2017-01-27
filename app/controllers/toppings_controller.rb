@@ -1,5 +1,5 @@
 class ToppingsController < ApplicationController
-  rescue_from Http::InvalidResponse, with: :heroku_down
+  rescue_from HttpRequest::InvalidResponse, with: :heroku_down
 
   def new
     @topping = Topping.new
