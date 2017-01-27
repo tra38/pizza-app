@@ -12,7 +12,7 @@
 </button>
 
   <!-- Modal for Pizza Description -->
-  <%= render 'modal-form', pizza: @new_pizza, toppings: @toppings, modal_name: "newPizza" %>
+  <%= render 'modal-form', pizza: @new_pizza, toppings: @toppings, modal_name: "newPizza", new_pizza: true %>
 
   <!-- Modal for Pizza Toppings -->
   <%= render 'toppings/modal-toppings', toppings: @toppings, new_topping: @new_topping  %>
@@ -34,7 +34,7 @@
           <button type="button" class="btn btn-info" data-toggle="modal" data-target=<%= "#pizza#{pizza.id}Modal"%>>
             Show/Edit Pizza
           </button>
-          <%= render 'modal-form', pizza: pizza, toppings: @toppings, modal_name: "pizza#{pizza.id}Modal" %>
+          <%= render 'modal-form', pizza: pizza, toppings: @toppings, modal_name: "pizza#{pizza.id}Modal", new_pizza: false %>
         </td>
       </tr>
     <% end %>

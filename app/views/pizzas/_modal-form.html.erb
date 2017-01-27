@@ -6,13 +6,18 @@
         <h4 class="modal-title" id="myModalLabel">Pizza Form</h4>
       </div>
       <div class="modal-body">
-        <%= form_for(pizza) do |f| %>
-        <%= render partial: "form_body", locals: { pizza: pizza, f: f, toppings: toppings } %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= f.submit 'Create Pizza', :class => 'btn btn-primary' %>
-        <% end %>
+        <% if new_pizza %>
+          <%= form_for(pizza) do |f| %>
+              <%= render "form_body", pizza: pizza, f: f, toppings: toppings %>
+              <%= render "modal-form-footer", f: f, message: "Create Pizza" %>
+          <% end %>
+        <% else %>
+          <%= form_for(pizza, url: pizza_path(pizza.id), method: :patch) do |f| %>
+            <%= render "show", pizza: pizza %>
+            <%= render "form_add_toppings", f: f, toppings: toppings %>
+            <%= render "modal-form-footer", f: f, message: "Update Pizza" %>
+          <% end %>
+        <%end%>
       </div>
     </div>
   </div>
