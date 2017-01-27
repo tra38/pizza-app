@@ -7,7 +7,7 @@ module HttpRequest
   end
 
   def self.get_request(key:, uri_string:)
-    APICache.get(key, :cache => 60) do
+    APICache.get(key, :cache => 30) do
       # http://stackoverflow.com/a/4581116/4765379
       url = URI.parse(uri_string)
       request = Net::HTTP::Get.new(url.to_s)
