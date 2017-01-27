@@ -39,6 +39,7 @@ class PizzasController < ApplicationController
         format.html { redirect_to "/", notice: 'Pizza was successfully created.' }
         format.json { render :show, status: :created, location: @pizza }
       else
+        @toppings = Topping.all
         format.html { render :new }
         format.json { render json: @pizza.errors, status: :unprocessable_entity }
       end
@@ -53,6 +54,7 @@ class PizzasController < ApplicationController
         format.html { redirect_to "/", notice: 'Pizza was successfully updated.' }
         format.json { render :show, status: :ok, location: @pizza }
       else
+        @toppings = Topping.all
         format.html { render :edit }
         format.json { render json: @pizza.errors, status: :unprocessable_entity }
       end
