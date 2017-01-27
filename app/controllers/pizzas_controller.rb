@@ -77,7 +77,7 @@ class PizzasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pizza_params
-      params.require(:pizza).permit(:name, :description)
+      params.require(:pizza).permit(:id, :name, :description, topping_ids: [])
     end
 
     def heroku_down
