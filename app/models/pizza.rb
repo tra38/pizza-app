@@ -3,6 +3,7 @@ class Pizza
   include HttpRequest
 
   attr_accessor :id, :name, :description
+  attr_reader :topping_ids
 
   validates_presence_of :name, :description
 
@@ -14,10 +15,8 @@ class Pizza
     end
   end
 
-  def topping_ids
-    toppings.each do |topping|
-      topping.id
-    end
+  def topping_ids=(array)
+    @topping_ids = array.delete_if(&:blank?).map(&:to_i)
   end
 
   def save
@@ -25,9 +24,15 @@ class Pizza
       data = { "name" => name, "description" => description }
       response = HttpRequest.post_request(data: data, uri_string: "https://pizzaserver.herokuapp.com/pizzas")
       self.id = response["id"]
+      add_toppings(topping_ids)
     else
       false
     end
+  end
+
+  def update(pizza_params)
+    self.topping_ids = pizza_params["topping_ids"]
+    add_toppings(topping_ids)
   end
 
   def self.all
@@ -59,6 +64,13 @@ class Pizza
       end
     rescue APICache::InvalidResponse
       []
+    end
+  end
+
+  def add_toppings(topping_ids)
+    topping_ids.each do |topping_id|
+      data = { topping_id: topping_id}
+      HttpRequest.post_request(data: data, uri_string: "https://pizzaserver.herokuapp.com/pizzas/#{id}/toppings")
     end
   end
 
