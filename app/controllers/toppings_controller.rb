@@ -1,6 +1,5 @@
 class ToppingsController < ApplicationController
-  rescue_from APICache::InvalidResponse, with: :heroku_down
-  rescue_from APICache::TimeoutError, with: :heroku_down
+  rescue_from Http::InvalidResponse, with: :heroku_down
 
   def new
     @topping = Topping.new

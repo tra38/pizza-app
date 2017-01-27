@@ -1,7 +1,6 @@
 class PizzasController < ApplicationController
   before_action :set_pizza, only: [:show, :edit, :update, :destroy]
-  rescue_from APICache::InvalidResponse, with: :heroku_down
-  rescue_from APICache::TimeoutError, with: :heroku_down
+  rescue_from HttpRequest::InvalidResponse, with: :heroku_down
 
   # GET /pizzas
   # GET /pizzas.json
